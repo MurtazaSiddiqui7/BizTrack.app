@@ -1,0 +1,17 @@
+{
+  "short_name": "BizTrack",
+  "name": "BizTrack – Distribution & Sales Tracker",
+  "icons": [
+    {
+      "src": "/logo-icon.png",
+      "type": "image/png",
+      "sizes": "192x192 512x512"
+    }
+  ],
+  "start_url": "/",
+  "background_color": "#064e3b",
+  "theme_color": "#064e3b",
+  "display": "standalone",
+  "orientation": "portrait",
+  "description": "Smart business and distribution manager for retail outlets and kirana stores."
+}
