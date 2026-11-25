@@ -63,65 +63,59 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
   const lowStockItems = inventory.filter(inv => inv.availableBoxes <= inv.lowStockThreshold);
 
   return (
-    <div className="space-y-6 animate-in fade-in duration-200">
+    <div className="space-y-5 animate-in fade-in duration-200">
       {/* Welcome & Status Banner */}
-      <div className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-emerald-900 via-emerald-800 to-emerald-950 text-white p-6 sm:p-8 shadow-xl shadow-emerald-950/15">
-        <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
-          <div className="space-y-2">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-300 text-xs font-bold border border-emerald-500/30">
-              <Sparkles className="w-3.5 h-3.5" />
-              <span>{category} • Cycle: 1st – 5th</span>
-            </div>
-            <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight">
-              Hello, {profile.ownerName}! 👋
-            </h2>
-            <p className="text-sm text-emerald-100/90 max-w-xl">
-              Here is your {category.toLowerCase()} distribution progress for <strong>{monthName}</strong>. 
-              {stats.pendingShops === 0 && stats.totalShops > 0
-                ? ' Amazing work! All scheduled shops are 100% completed.'
-                : ` You have ${stats.pendingShops + stats.partialShops} shops awaiting delivery.`}
-            </p>
+      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-emerald-900 via-emerald-800 to-emerald-950 text-white p-5 shadow-xl shadow-emerald-950/15">
+        <div className="relative z-10">
+          <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-500/20 text-emerald-300 text-xs font-bold border border-emerald-500/30 mb-3">
+            <Sparkles className="w-3 h-3" />
+            <span className="truncate">{category} • Cycle: 1st – 5th</span>
           </div>
-
-          <div className="flex flex-wrap items-center gap-3">
+          <h2 className="text-xl font-extrabold tracking-tight leading-snug">
+            Hello, {profile.ownerName.split(' ')[0]}! 👋
+          </h2>
+          <p className="text-sm text-emerald-100/90 mt-1 leading-relaxed">
+            {stats.pendingShops === 0 && stats.totalShops > 0
+              ? 'Amazing! All shops 100% completed! 🎉'
+              : `${stats.pendingShops + stats.partialShops} shops awaiting delivery in ${monthName}.`}
+          </p>
+          <div className="flex flex-wrap gap-2 mt-4">
             <button
               onClick={onOpenRecordDelivery}
-              className="flex items-center gap-2 px-5 py-3 rounded-2xl bg-white text-emerald-900 font-extrabold text-sm shadow-lg hover:bg-emerald-50 active:scale-95 transition"
+              className="flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-white text-emerald-900 font-extrabold text-sm shadow-lg hover:bg-emerald-50 active:scale-95 transition"
             >
               <Truck className="w-4 h-4 text-emerald-700" />
               <span>Record Delivery</span>
             </button>
             <button
               onClick={() => setActiveView('route')}
-              className="flex items-center gap-2 px-5 py-3 rounded-2xl bg-emerald-700/60 hover:bg-emerald-700 border border-emerald-500/30 text-white font-bold text-sm backdrop-blur active:scale-95 transition"
+              className="flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-emerald-700/60 hover:bg-emerald-700 border border-emerald-500/30 text-white font-bold text-sm active:scale-95 transition"
             >
               <Navigation className="w-4 h-4" />
               <span>Plan Route</span>
             </button>
           </div>
         </div>
-
-        {/* Decorative background shape */}
-        <div className="absolute -right-12 -bottom-16 w-64 h-64 rounded-full bg-emerald-500/10 blur-2xl pointer-events-none" />
+        <div className="absolute -right-8 -bottom-10 w-48 h-48 rounded-full bg-emerald-500/10 blur-2xl pointer-events-none" />
       </div>
 
       {/* C. LARGE DISTRIBUTION PROGRESS BAR */}
-      <div className="bg-white rounded-3xl p-6 sm:p-7 border border-slate-200/80 shadow-sm space-y-5">
+      <div className="bg-white rounded-3xl p-4 sm:p-7 border border-slate-200/80 shadow-sm space-y-4">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-          <div>
-            <h3 className="text-base font-extrabold text-slate-900">
-              Monthly Distribution Progress – {monthName}
+          <div className="min-w-0">
+            <h3 className="text-sm font-extrabold text-slate-900 truncate">
+              Monthly Progress – {monthName}
             </h3>
             <p className="text-xs text-slate-500">
-              Tracking shops visited and box quotas fulfilled between 1st and 5th
+              Shops visited &amp; boxes (1st–5th)
             </p>
           </div>
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 flex-shrink-0">
             <span className="text-2xl font-black text-emerald-700">
               {stats.shopCompletionPercentage}%
             </span>
-            <span className="text-xs font-bold px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-800">
-              {stats.completedShops} of {stats.totalShops} Shops Done
+            <span className="text-xs font-bold px-2 py-1 rounded-full bg-emerald-100 text-emerald-800 whitespace-nowrap">
+              {stats.completedShops}/{stats.totalShops} Done
             </span>
           </div>
         </div>
@@ -129,9 +123,9 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
         {/* Visual Progress Bar - Dual Bar (Shops vs Boxes) */}
         <div className="space-y-4">
           <div>
-            <div className="flex justify-between text-xs font-semibold mb-1.5 text-slate-700">
-              <span>Shop Outlets Completed</span>
-              <span>{stats.completedShops} / {stats.totalShops} Shops ({stats.shopCompletionPercentage}%)</span>
+            <div className="flex justify-between text-xs font-semibold mb-1.5 text-slate-700 gap-2">
+              <span className="flex-shrink-0">Shops Completed</span>
+              <span className="text-right">{stats.completedShops}/{stats.totalShops} ({stats.shopCompletionPercentage}%)</span>
             </div>
             <div className="w-full h-4 rounded-full bg-slate-100 overflow-hidden p-0.5 border border-slate-200/60">
               <div
@@ -142,10 +136,10 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
           </div>
 
           <div>
-            <div className="flex justify-between text-xs font-semibold mb-1.5 text-slate-700">
-              <span>{unit} Delivered</span>
-              <span>
-                {stats.totalDistributedBoxes} / {stats.totalAssignedBoxes} {unit} ({stats.boxCompletionPercentage}%)
+            <div className="flex justify-between text-xs font-semibold mb-1.5 text-slate-700 gap-2">
+              <span className="flex-shrink-0">{unit} Delivered</span>
+              <span className="text-right">
+                {stats.totalDistributedBoxes}/{stats.totalAssignedBoxes} ({stats.boxCompletionPercentage}%)
               </span>
             </div>
             <div className="w-full h-3 rounded-full bg-slate-100 overflow-hidden p-0.5 border border-slate-200/60">
@@ -158,22 +152,22 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
         </div>
 
         {/* Status Legend */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2 text-xs">
-          <div className="flex items-center gap-2 p-2 rounded-xl bg-emerald-50 text-emerald-900 font-semibold border border-emerald-100">
-            <span className="w-2.5 h-2.5 rounded-full bg-emerald-600" />
-            <span>Completed: <strong>{stats.completedShops}</strong></span>
+        <div className="grid grid-cols-2 gap-2 pt-1 text-xs">
+          <div className="flex items-center gap-1.5 p-2 rounded-xl bg-emerald-50 text-emerald-900 font-semibold border border-emerald-100">
+            <span className="w-2 h-2 rounded-full bg-emerald-600 flex-shrink-0" />
+            <span className="truncate">Done: <strong>{stats.completedShops}</strong></span>
           </div>
-          <div className="flex items-center gap-2 p-2 rounded-xl bg-amber-50 text-amber-900 font-semibold border border-amber-100">
-            <span className="w-2.5 h-2.5 rounded-full bg-amber-500" />
-            <span>Partially Done: <strong>{stats.partialShops}</strong></span>
+          <div className="flex items-center gap-1.5 p-2 rounded-xl bg-amber-50 text-amber-900 font-semibold border border-amber-100">
+            <span className="w-2 h-2 rounded-full bg-amber-500 flex-shrink-0" />
+            <span className="truncate">Partial: <strong>{stats.partialShops}</strong></span>
           </div>
-          <div className="flex items-center gap-2 p-2 rounded-xl bg-rose-50 text-rose-900 font-semibold border border-rose-100">
-            <span className="w-2.5 h-2.5 rounded-full bg-rose-600" />
-            <span>Pending: <strong>{stats.pendingShops}</strong></span>
+          <div className="flex items-center gap-1.5 p-2 rounded-xl bg-rose-50 text-rose-900 font-semibold border border-rose-100">
+            <span className="w-2 h-2 rounded-full bg-rose-600 flex-shrink-0" />
+            <span className="truncate">Pending: <strong>{stats.pendingShops}</strong></span>
           </div>
-          <div className="flex items-center gap-2 p-2 rounded-xl bg-slate-50 text-slate-700 font-semibold border border-slate-200">
-            <span className="w-2.5 h-2.5 rounded-full bg-slate-400" />
-            <span>{unit} Remaining: <strong>{stats.totalRemainingBoxes}</strong></span>
+          <div className="flex items-center gap-1.5 p-2 rounded-xl bg-slate-50 text-slate-700 font-semibold border border-slate-200">
+            <span className="w-2 h-2 rounded-full bg-slate-400 flex-shrink-0" />
+            <span className="truncate">Left: <strong>{stats.totalRemainingBoxes}</strong></span>
           </div>
         </div>
       </div>

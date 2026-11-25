@@ -367,7 +367,7 @@ export const DistributionView: React.FC<DistributionViewProps> = ({
                 </div>
 
                 {/* Flavour-wise Assignment & Delivery Table */}
-                <div className={`p-5 pt-0 border-t border-slate-100 ${isExpanded ? 'block' : 'hidden md:block'}`}>
+                <div className={`p-5 pt-0 border-t border-slate-100 ${isExpanded ? 'block' : 'hidden'}`}>
                   <div className="mt-3 overflow-x-auto">
                     <table className="w-full text-left text-xs">
                       <thead>
