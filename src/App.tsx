@@ -93,17 +93,17 @@ const MainAppContent: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 flex overflow-x-hidden">
+    <div className="min-h-screen bg-slate-50 flex overflow-x-hidden w-full" style={{maxWidth:'100vw',overflowX:'hidden'}}>
       {/* Desktop Sidebar */}
       <Sidebar />
 
       {/* Main Content Area */}
-      <div className="flex-1 lg:pl-64 flex flex-col min-h-screen pb-20 lg:pb-8 overflow-x-hidden w-full min-w-0">
+      <div className="flex-1 lg:pl-64 flex flex-col min-h-screen pb-20 lg:pb-8 overflow-x-hidden w-full min-w-0" style={{maxWidth:'100%',overflowX:'hidden'}}>
         {/* Top Header */}
         <Header />
 
         {/* Dynamic Page Views */}
-        <main className="flex-1 p-3 sm:p-5 lg:p-8 w-full min-w-0 overflow-x-hidden">
+        <main className="flex-1 p-3 sm:p-5 lg:p-8 w-full min-w-0 overflow-x-hidden" style={{maxWidth:'100%',overflowX:'hidden'}}>
           {activeView === 'dashboard' && (
             <DashboardView
               onOpenAddShop={handleOpenAddShop}

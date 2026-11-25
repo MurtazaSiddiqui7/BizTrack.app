@@ -63,7 +63,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
   const lowStockItems = inventory.filter(inv => inv.availableBoxes <= inv.lowStockThreshold);
 
   return (
-    <div className="space-y-5 animate-in fade-in duration-200">
+    <div className="space-y-5 animate-in fade-in duration-200 w-full min-w-0 overflow-x-hidden">
       {/* Welcome & Status Banner */}
       <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-emerald-900 via-emerald-800 to-emerald-950 text-white p-5 shadow-xl shadow-emerald-950/15">
         <div className="relative z-10">
@@ -454,3 +454,4 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
     </div>
   );
 };
+

@@ -85,7 +85,7 @@ export const ShopsView: React.FC<ShopsViewProps> = ({
   };
 
   return (
-    <div className="space-y-6 animate-in fade-in duration-200">
+    <div className="space-y-6 animate-in fade-in duration-200 w-full min-w-0 overflow-x-hidden">
       {/* Title & Top Action Bar */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
@@ -520,3 +520,4 @@ export const ShopsView: React.FC<ShopsViewProps> = ({
     </div>
   );
 };
+
