@@ -114,24 +114,24 @@ export const AssignFlavoursModal: React.FC<AssignFlavoursModalProps> = ({ shop, 
         </div>
 
         {/* Form Body */}
-        <form onSubmit={handleSave} className="flex-1 overflow-y-auto p-6 space-y-6">
+        <form onSubmit={handleSave} className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-5">
           {/* Shop & Template Copy Bar */}
           <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-            <div>
+            <div className="min-w-0">
               <p className="text-xs font-bold uppercase tracking-wider text-slate-500">Target Outlet</p>
-              <h4 className="text-sm font-bold text-slate-900">{shop.name}</h4>
-              <p className="text-xs text-slate-500">Owner: {shop.ownerName}</p>
+              <h4 className="text-sm font-bold text-slate-900 truncate">{shop.name}</h4>
+              <p className="text-xs text-slate-500 truncate">Owner: {shop.ownerName}</p>
             </div>
 
             {/* Copy from another shop shortcut */}
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 w-full sm:w-auto">
               <select
                 value={templateShopId}
                 onChange={e => {
                   setTemplateShopId(e.target.value);
                   handleCopyTemplate(e.target.value);
                 }}
-                className="text-xs py-1.5 px-3 rounded-xl border border-slate-200 bg-white text-slate-700 font-medium focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                className="text-xs py-1.5 px-3 rounded-xl border border-slate-200 bg-white text-slate-700 font-medium focus:outline-none focus:ring-2 focus:ring-emerald-500 w-full sm:w-auto max-w-full"
               >
                 <option value="">Copy quota from another shop...</option>
                 {shops
@@ -170,15 +170,15 @@ export const AssignFlavoursModal: React.FC<AssignFlavoursModalProps> = ({ shop, 
                   return (
                     <div
                       key={prod.id}
-                      className={`p-3.5 rounded-2xl border transition flex items-center justify-between gap-3 ${
+                      className={`p-3.5 rounded-2xl border transition flex flex-col sm:flex-row sm:items-center justify-between gap-3 ${
                         isAssigned
                           ? 'bg-emerald-50/40 border-emerald-300 ring-1 ring-emerald-500/20'
                           : 'bg-white border-slate-200 hover:border-slate-300'
                       }`}
                     >
                       <div className="flex-1 min-w-0">
-                        <div className="flex items-center gap-2">
-                          <span className="text-[11px] font-bold px-2 py-0.5 rounded-md bg-slate-100 text-slate-700">
+                        <div className="flex flex-wrap items-center gap-2">
+                          <span className="text-[11px] font-bold px-2 py-0.5 rounded-md bg-slate-100 text-slate-700 flex-shrink-0">
                             {prod.brandName}
                           </span>
                           <h5 className="text-sm font-bold text-slate-900 truncate">
@@ -191,7 +191,7 @@ export const AssignFlavoursModal: React.FC<AssignFlavoursModalProps> = ({ shop, 
                       </div>
 
                       {/* Stepper controls */}
-                      <div className="flex items-center gap-2">
+                      <div className="flex items-center justify-end gap-2 flex-shrink-0">
                         <button
                           type="button"
                           onClick={() => handleQtyChange(prod.id, currentQty - 1)}
@@ -241,7 +241,7 @@ export const AssignFlavoursModal: React.FC<AssignFlavoursModalProps> = ({ shop, 
           </div>
 
           {/* Quota Summary Footer */}
-          <div className="p-4 rounded-2xl bg-gradient-to-r from-emerald-50 to-emerald-100/60 border border-emerald-200 flex items-center justify-between">
+          <div className="p-4 rounded-2xl bg-gradient-to-r from-emerald-50 to-emerald-100/60 border border-emerald-200 flex flex-wrap items-center justify-between gap-3">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-xl bg-emerald-700 text-white flex items-center justify-center font-bold">
                 <Package className="w-5 h-5" />

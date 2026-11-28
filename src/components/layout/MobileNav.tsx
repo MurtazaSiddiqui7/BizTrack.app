@@ -19,7 +19,7 @@ export const MobileNav: React.FC = () => {
 
   return (
     <>
-      <nav className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur border-t border-slate-200 px-2 py-1 shadow-lg">
+      <nav className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur border-t border-slate-200 px-2 py-1 shadow-lg mobile-nav-safe">
         <div className="grid grid-cols-5 gap-1">
           {/* Home / Dashboard */}
           <button
@@ -42,7 +42,7 @@ export const MobileNav: React.FC = () => {
             <Store className={`w-5 h-5 ${activeView === 'shops' ? 'stroke-[2.5]' : ''}`} />
             <span className="text-[10px] mt-0.5">Shops</span>
             {stats.totalShops > 0 && (
-              <span className="absolute top-1 right-3 px-1.5 py-0.2 rounded-full text-[9px] bg-slate-100 text-slate-600 font-bold">
+              <span className="absolute top-1 right-3 px-1.5 py-0.5 rounded-full text-[9px] bg-slate-100 text-slate-600 font-bold">
                 {stats.totalShops}
               </span>
             )}
@@ -60,7 +60,7 @@ export const MobileNav: React.FC = () => {
             </div>
             <span className="text-[10px] mt-0.5">Deliver</span>
             {stats.pendingShops > 0 && (
-              <span className="absolute top-1 right-2 px-1 py-0.2 rounded-full text-[9px] bg-rose-500 text-white font-bold">
+              <span className="absolute top-1 right-2 px-1 py-0.5 rounded-full text-[9px] bg-rose-500 text-white font-bold">
                 {stats.pendingShops}
               </span>
             )}

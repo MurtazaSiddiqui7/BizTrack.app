@@ -43,11 +43,11 @@ export const InteractiveMapView: React.FC<InteractiveMapViewProps> = ({ onRecord
   const defaultLng = filteredSummaries[0]?.shop.lng || 78.4867;
 
   return (
-    <div className="space-y-6 animate-in fade-in duration-200">
+    <div className="space-y-6 animate-in fade-in duration-200 w-full min-w-0 overflow-x-hidden">
       {/* Header */}
-      <div className="bg-white rounded-3xl p-6 border border-slate-200/80 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        <div>
-          <h2 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight flex items-center gap-2">
+      <div className="bg-white rounded-3xl p-4 sm:p-6 border border-slate-200/80 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div className="min-w-0">
+          <h2 className="text-lg sm:text-2xl font-black text-slate-900 tracking-tight flex flex-wrap items-center gap-2">
             <span>Shop Location & GPS Map</span>
             <span className="text-xs px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800 font-bold">
               {filteredSummaries.length} Pins
@@ -59,13 +59,13 @@ export const InteractiveMapView: React.FC<InteractiveMapViewProps> = ({ onRecord
         </div>
 
         {/* Filter and Legend */}
-        <div className="flex items-center gap-3">
-          <div className="flex items-center gap-1.5">
-            <Filter className="w-3.5 h-3.5 text-slate-400" />
+        <div className="flex items-center gap-3 w-full sm:w-auto">
+          <div className="flex items-center gap-1.5 w-full sm:w-auto">
+            <Filter className="w-3.5 h-3.5 text-slate-400 flex-shrink-0" />
             <select
               value={selectedLocality}
               onChange={e => setSelectedLocality(e.target.value)}
-              className="text-xs py-2 px-3 rounded-xl border border-slate-200 bg-white font-semibold focus:outline-none focus:ring-2 focus:ring-emerald-500"
+              className="text-xs py-2 px-3 rounded-xl border border-slate-200 bg-white font-semibold focus:outline-none focus:ring-2 focus:ring-emerald-500 w-full sm:w-auto max-w-full"
             >
               <option value="all">All Areas ({summaries.length})</option>
               {localities.map(loc => (
@@ -77,17 +77,17 @@ export const InteractiveMapView: React.FC<InteractiveMapViewProps> = ({ onRecord
       </div>
 
       {/* Map Legend */}
-      <div className="grid grid-cols-3 sm:grid-cols-3 gap-3 text-xs">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-3 text-xs">
         <div className="p-3 rounded-2xl bg-emerald-50 border border-emerald-100 flex items-center gap-2 font-bold text-emerald-900">
-          <span className="w-3 h-3 rounded-full bg-emerald-600 shadow-sm" />
+          <span className="w-3 h-3 rounded-full bg-emerald-600 shadow-sm flex-shrink-0" />
           <span>Completed ({summaries.filter(s => s.status === 'completed').length})</span>
         </div>
         <div className="p-3 rounded-2xl bg-amber-50 border border-amber-100 flex items-center gap-2 font-bold text-amber-900">
-          <span className="w-3 h-3 rounded-full bg-amber-500 shadow-sm" />
+          <span className="w-3 h-3 rounded-full bg-amber-500 shadow-sm flex-shrink-0" />
           <span>Partial Delivery ({summaries.filter(s => s.status === 'partial').length})</span>
         </div>
         <div className="p-3 rounded-2xl bg-rose-50 border border-rose-100 flex items-center gap-2 font-bold text-rose-900">
-          <span className="w-3 h-3 rounded-full bg-rose-600 shadow-sm" />
+          <span className="w-3 h-3 rounded-full bg-rose-600 shadow-sm flex-shrink-0" />
           <span>Pending ({summaries.filter(s => s.status === 'pending').length})</span>
         </div>
       </div>
@@ -95,7 +95,7 @@ export const InteractiveMapView: React.FC<InteractiveMapViewProps> = ({ onRecord
       {/* Interactive Map Container */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Map Display Card */}
-        <div className="lg:col-span-2 bg-white rounded-3xl overflow-hidden border border-slate-200/80 shadow-sm flex flex-col h-[520px]">
+        <div className="lg:col-span-2 bg-white rounded-3xl overflow-hidden border border-slate-200/80 shadow-sm flex flex-col h-[360px] sm:h-[520px]">
           {/* Embedded OpenStreetMap interactive frame with customized markers */}
           <iframe
             title="Shop Locations Map"
