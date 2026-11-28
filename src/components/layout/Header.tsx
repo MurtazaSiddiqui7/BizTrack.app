@@ -12,6 +12,8 @@ import {
   Sparkles
 } from 'lucide-react';
 import { useApp } from '../../context/AppContext';
+import { usePWAInstall } from '../../hooks/usePWAInstall';
+import { InstallGuideModal } from '../modals/InstallGuideModal';
 
 export const Header: React.FC = () => {
   const {
@@ -29,21 +31,16 @@ export const Header: React.FC = () => {
 
   const [showNotifications, setShowNotifications] = useState(false);
   const [showMonthPicker, setShowMonthPicker] = useState(false);
-  const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
+  const [showInstallGuide, setShowInstallGuide] = useState(false);
+  const { isInstalled, canInstallNative, promptInstall } = usePWAInstall();
   const notifRef = useRef<HTMLDivElement>(null);
   const monthRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    const handler = (e: any) => { e.preventDefault(); setDeferredPrompt(e); };
-    window.addEventListener('beforeinstallprompt', handler);
-    return () => window.removeEventListener('beforeinstallprompt', handler);
-  }, []);
-
   const handleInstallClick = async () => {
-    if (!deferredPrompt) return;
-    deferredPrompt.prompt();
-    const { outcome } = await deferredPrompt.userChoice;
-    if (outcome === 'accepted') setDeferredPrompt(null);
+    const result = await promptInstall();
+    if (result === 'unavailable') {
+      setShowInstallGuide(true);
+    }
   };
 
   useEffect(() => {
@@ -155,6 +152,18 @@ export const Header: React.FC = () => {
             {showMonthPicker && <MonthDropdown />}
           </div>
 
+          {/* Install App button on mobile when not yet installed */}
+          {!isInstalled && (
+            <button
+              onClick={handleInstallClick}
+              title={canInstallNative ? 'Install BizTrack App' : 'How to Install BizTrack'}
+              className="flex items-center gap-1 px-2 py-1.5 rounded-lg bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-200 text-[11px] font-bold flex-shrink-0 transition"
+            >
+              <Download className="w-3.5 h-3.5 text-emerald-700" />
+              <span>Install</span>
+            </button>
+          )}
+
           {/* Notification Bell */}
           <div className="relative flex-shrink-0" ref={notifRef}>
             <button onClick={() => setShowNotifications(!showNotifications)} className="relative p-1.5 rounded-lg text-slate-600 hover:bg-slate-100 transition">
@@ -213,9 +222,12 @@ export const Header: React.FC = () => {
 
         {/* Right actions */}
         <div className="flex items-center gap-3">
-          {deferredPrompt && (
-            <button onClick={handleInstallClick} className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold transition">
-              <Download className="w-3.5 h-3.5" /> Install App
+          {!isInstalled && (
+            <button
+              onClick={handleInstallClick}
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold transition"
+            >
+              <Download className="w-3.5 h-3.5" /> {canInstallNative ? 'Install App' : 'Install Guide'}
             </button>
           )}
 
@@ -251,6 +263,10 @@ export const Header: React.FC = () => {
           </button>
         </div>
       </div>
+      {/* Install Guide Modal (fallback when native prompt unavailable) */}
+      {showInstallGuide && (
+        <InstallGuideModal onClose={() => setShowInstallGuide(false)} />
+      )}
     </header>
   );
 };

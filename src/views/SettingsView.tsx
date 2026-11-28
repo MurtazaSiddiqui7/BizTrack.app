@@ -17,6 +17,8 @@ import {
 import { useApp } from '../context/AppContext';
 import { storage } from '../services/storage';
 import { NotificationEngine } from '../services/notificationEngine';
+import { usePWAInstall } from '../hooks/usePWAInstall';
+import { InstallGuideModal } from '../components/modals/InstallGuideModal';
 
 const CATEGORY_PRESETS = [
   'Chocolates & Confectionery',
@@ -65,6 +67,15 @@ export const SettingsView: React.FC = () => {
   const [pushStatus, setPushStatus] = useState<string>(
     'Notification' in window ? Notification.permission : 'unsupported'
   );
+  const { isInstalled, canInstallNative, promptInstall } = usePWAInstall();
+  const [showInstallGuide, setShowInstallGuide] = useState(false);
+
+  const handleInstallApp = async () => {
+    const result = await promptInstall();
+    if (result === 'unavailable') {
+      setShowInstallGuide(true);
+    }
+  };
 
   const handleProfileSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -402,6 +413,34 @@ export const SettingsView: React.FC = () => {
                 </button>
               )}
             </div>
+
+            {/* Install BizTrack as Mobile App (PWA) */}
+            <div className="p-4 rounded-2xl bg-emerald-50/70 border border-emerald-200 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+              <div>
+                <p className="text-xs font-bold text-emerald-950">Install BizTrack Mobile App (PWA)</p>
+                <p className="text-[11px] text-emerald-700 mt-0.5">
+                  {isInstalled
+                    ? 'BizTrack is installed and running in standalone app mode.'
+                    : 'Install on Android or desktop for full-screen standalone launch without browser bars.'}
+                </p>
+              </div>
+
+              {isInstalled ? (
+                <span className="px-3 py-1.5 rounded-xl bg-emerald-100 text-emerald-800 text-xs font-bold flex items-center gap-1.5 flex-shrink-0 border border-emerald-300">
+                  <Check className="w-3.5 h-3.5" />
+                  <span>Installed</span>
+                </span>
+              ) : (
+                <button
+                  type="button"
+                  onClick={handleInstallApp}
+                  className="px-4 py-2 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-bold transition flex items-center gap-1.5 flex-shrink-0"
+                >
+                  <Download className="w-3.5 h-3.5" />
+                  <span>{canInstallNative ? 'Install BizTrack' : 'Install Instructions'}</span>
+                </button>
+              )}
+            </div>
           </div>
         </div>
 
@@ -545,6 +584,9 @@ export const SettingsView: React.FC = () => {
           </div>
         </div>
       </div>
+      {showInstallGuide && (
+        <InstallGuideModal onClose={() => setShowInstallGuide(false)} />
+      )}
     </div>
   );
 };
