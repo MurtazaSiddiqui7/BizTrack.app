@@ -55,7 +55,7 @@ export const RoutePlannerView: React.FC<RoutePlannerViewProps> = ({ onRecordDeli
   };
 
   return (
-    <div className="space-y-6 animate-in fade-in duration-200">
+    <div className="space-y-6 animate-in fade-in duration-200 w-full min-w-0 overflow-x-hidden">
       {/* Header Banner */}
       <div className="bg-gradient-to-r from-emerald-900 via-emerald-800 to-emerald-950 text-white rounded-3xl p-6 sm:p-7 shadow-lg space-y-4">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
@@ -211,7 +211,7 @@ export const RoutePlannerView: React.FC<RoutePlannerViewProps> = ({ onRecordDeli
                   </div>
 
                   {/* Quota to Unload & Actions */}
-                  <div className="flex items-center justify-between md:justify-end gap-4 border-t md:border-t-0 pt-3 md:pt-0">
+                  <div className="flex items-center justify-between gap-3 border-t pt-3 mt-1 flex-wrap">
                     <div className="text-left md:text-right">
                       <p className="text-xs text-slate-400 font-medium">To Deliver at Stop</p>
                       <p className="text-lg font-black text-rose-600">
@@ -222,8 +222,7 @@ export const RoutePlannerView: React.FC<RoutePlannerViewProps> = ({ onRecordDeli
                       </p>
                     </div>
 
-                    <div className="flex items-center gap-2">
-                      {/* 1-Click Directions */}
+                    <div className="flex items-center gap-1.5 flex-wrap">
                       <a
                         href={getDirectionsUrl(shop.lat, shop.lng)}
                         target="_blank"
@@ -282,3 +281,5 @@ export const RoutePlannerView: React.FC<RoutePlannerViewProps> = ({ onRecordDeli
     </div>
   );
 };
+
+

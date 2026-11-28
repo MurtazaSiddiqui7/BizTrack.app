@@ -36,7 +36,7 @@ export const ReportsView: React.FC = () => {
   };
 
   return (
-    <div className="space-y-6 animate-in fade-in duration-200">
+    <div className="space-y-6 animate-in fade-in duration-200 w-full min-w-0 overflow-x-hidden">
       {/* Title */}
       <div>
         <h2 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight flex items-center gap-2">
@@ -149,3 +149,4 @@ export const ReportsView: React.FC = () => {
     </div>
   );
 };
+

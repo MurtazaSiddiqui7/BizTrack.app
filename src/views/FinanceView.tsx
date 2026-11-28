@@ -90,7 +90,7 @@ export const FinanceView: React.FC = () => {
   };
 
   return (
-    <div className="space-y-6 animate-in fade-in duration-200">
+    <div className="space-y-6 animate-in fade-in duration-200 w-full min-w-0 overflow-x-hidden">
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
@@ -160,7 +160,7 @@ export const FinanceView: React.FC = () => {
       </div>
 
       {/* Tab Switcher */}
-      <div className="flex items-center gap-2 border-b border-slate-200 pb-2">
+      <div className="flex items-center gap-2 border-b border-slate-200 pb-2 overflow-x-auto">
         <button
           onClick={() => setActiveTab('payments')}
           className={`px-4 py-2 rounded-2xl text-xs font-bold transition flex items-center gap-2 ${
@@ -474,3 +474,5 @@ export const FinanceView: React.FC = () => {
     </div>
   );
 };
+
+

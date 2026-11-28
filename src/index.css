@@ -3,69 +3,90 @@
 @tailwind utilities;
 
 @layer base {
-  html, body {
-    @apply bg-slate-50 text-slate-900 antialiased font-sans;
-    -webkit-tap-highlight-color: transparent;
-    overflow-x: hidden !important;
-    max-width: 100vw;
-    width: 100%;
-  }
-
-  * {
-    box-sizing: border-box;
-    max-width: 100%;
-  }
-
-  /* Nuclear: nothing can break out horizontally */
   html {
-    overflow-x: hidden !important;
+    overflow-x: hidden;
+    max-width: 100vw;
+    scroll-behavior: smooth;
   }
 
   body {
-    overflow-x: hidden !important;
+    @apply bg-slate-50 text-slate-900 antialiased font-sans;
+    -webkit-tap-highlight-color: transparent;
+    overflow-x: hidden;
+    max-width: 100vw;
     position: relative;
+    width: 100%;
+  }
+
+  *, *::before, *::after {
+    box-sizing: border-box;
   }
 
   #root {
-    overflow-x: hidden !important;
+    overflow-x: hidden;
     max-width: 100vw;
     width: 100%;
   }
 
-  /* Tables always scroll within their container, never the page */
-  table {
-    display: block;
-    overflow-x: auto;
-    white-space: nowrap;
+  /* Images never overflow their container */
+  img, video, svg, canvas {
     max-width: 100%;
-  }
-
-  /* But wide tables in a forced overflow-x-auto parent just scroll that div */
-  .overflow-x-auto table {
-    display: table;
-    white-space: normal;
-  }
-
-  img, video, iframe, embed, object {
-    max-width: 100%;
+    height: auto;
   }
 }
 
-/* Custom Scrollbar */
-::-webkit-scrollbar {
-  width: 4px;
-  height: 4px;
+/* ─── Custom scrollbar ─────────────────────────── */
+::-webkit-scrollbar { width: 4px; height: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 9999px; }
+::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+
+/* ─── NUCLEAR overflow fix ──────────────────────
+   Every flex / grid child must shrink to fit.
+   Only tables and scroll containers are excluded. */
+.flex > *,
+.flex-1,
+.flex-auto,
+.flex-initial {
+  min-width: 0;
 }
 
-::-webkit-scrollbar-track {
-  background: transparent;
+/* ─── Mobile-safe table wrapper ────────────────── */
+table {
+  width: 100%;
+  min-width: 0;
 }
 
-::-webkit-scrollbar-thumb {
-  background: #cbd5e1;
-  border-radius: 9999px;
+.table-scroll-wrapper {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  max-width: 100%;
 }
 
-::-webkit-scrollbar-thumb:hover {
-  background: #94a3b8;
+/* Containers that should scroll only within themselves */
+.overflow-x-auto {
+  -webkit-overflow-scrolling: touch;
+}
+
+/* ─── Prevent flex children from overflowing ───── */
+.flex-safe { min-width: 0; }
+
+/* ─── Mobile bottom nav safe area ──────────────── */
+@supports (padding-bottom: env(safe-area-inset-bottom)) {
+  .mobile-nav-safe {
+    padding-bottom: calc(0.25rem + env(safe-area-inset-bottom));
+  }
+}
+
+/* ─── Responsive text truncation helpers ────────── */
+.text-clamp-1 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ─── Make all wrappers safe by default ─────────── */
+[class*="space-y"] > * {
+  min-width: 0;
+  max-width: 100%;
 }

@@ -72,7 +72,7 @@ export const MonthlyHistoryView: React.FC = () => {
   };
 
   return (
-    <div className="space-y-6 animate-in fade-in duration-200">
+    <div className="space-y-6 animate-in fade-in duration-200 w-full min-w-0 overflow-x-hidden">
       {/* Header & Month Selector */}
       <div className="bg-white rounded-3xl p-6 border border-slate-200/80 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
@@ -248,3 +248,4 @@ export const MonthlyHistoryView: React.FC = () => {
     </div>
   );
 };
+

@@ -79,17 +79,17 @@ export const AnalyticsView: React.FC = () => {
   ].filter(d => d.value > 0);
 
   return (
-    <div className="space-y-6 animate-in fade-in duration-200">
+    <div className="space-y-6 animate-in fade-in duration-200 w-full min-w-0 overflow-x-hidden">
       {/* Title */}
       <div>
-        <h2 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight flex items-center gap-2">
+        <h2 className="text-xl font-black text-slate-900 tracking-tight flex items-center gap-2 flex-wrap min-w-0">
           <span>Business & Distribution Analytics</span>
           <span className="text-xs px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800 font-bold">
             Live Insights
           </span>
         </h2>
         <p className="text-xs text-slate-500 mt-0.5">
-          Real-time metrics on product demand, outlet fulfillment rates and locality sales volume
+          Real-time metrics on product demand and outlet fulfillment
         </p>
       </div>
 
@@ -268,3 +268,5 @@ export const AnalyticsView: React.FC = () => {
     </div>
   );
 };
+
+
